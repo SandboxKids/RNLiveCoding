@@ -13,10 +13,23 @@ export default function App() {
         fetchData();
     }, []);
 
+    const sortData = (data: {name: string}[]): {name: string}[] => {
+        return data.sort((a, b) => {
+            if (a.name < b.name) {
+                return -1;
+            }
+            if (a.name > b.name) {
+                return 1;
+            }
+            return 0;
+        });
+    };
+
     const fetchData = async () => {
         try {
             const response = await axios.get(API_URL);
-            setData(Object.values(response.data.data.memes));
+            const sortedData = sortData(Object.values(response.data.data.memes));
+            setData(sortedData);
         } catch (error) {
             console.error(error);
         }
@@ -25,7 +38,8 @@ export default function App() {
     const renderItem = ({ item }) => (
         <View style={styles.item}>
             <Avatar source={{ uri: item.url }}
-                    defaultSource={PLACEHOLDER_IMAGE}/>
+                    defaultSource={PLACEHOLDER_IMAGE}
+                    size={60}/>
             <Text style={styles.title}>{item.name}</Text>
         </View>
     );
@@ -55,6 +69,6 @@ const styles = StyleSheet.create({
     },
     title: {
         marginLeft: 10,
-        fontSize: 14,
+        fontSize: 16,
     },
 });
