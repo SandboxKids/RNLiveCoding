@@ -4,6 +4,7 @@ import { Avatar } from 'react-native-elements';
 import axios from 'axios';
 
 const API_URL = 'https://api.imgflip.com/get_memes';
+const PLACEHOLDER_IMAGE = require('./placeholder.png');
 
 export default function App() {
     const [data, setData] = useState([]);
@@ -23,7 +24,8 @@ export default function App() {
 
     const renderItem = ({ item }) => (
         <View style={styles.item}>
-            <Avatar source={{ uri: item.url }} />
+            <Avatar source={{ uri: item.url }}
+                    defaultSource={PLACEHOLDER_IMAGE}/>
             <Text style={styles.title}>{item.name}</Text>
         </View>
     );
@@ -49,10 +51,10 @@ const styles = StyleSheet.create({
     item: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginVertical: 10,
+        marginVertical: 5,
     },
     title: {
         marginLeft: 10,
-        fontSize: 16,
+        fontSize: 14,
     },
 });
